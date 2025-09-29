@@ -68,18 +68,23 @@ li {
   align-items: center;
 }
 
-.checkbox svg {
+.checkbox svg,
+.edit-btn svg,
+.delete-btn svg {
   height: 30px;
   width: 30px;
 }
 
 .task-completed {
   position: relative;
+  text-align: left;
+  padding: 8px;
+  border: 2px solid transparent;
   transition: all calc(var(--duration) / 2) linear calc(var(--duration) / 2);
 }
 
 .task-completed.checked {
-  color: #1b4a4e;
+  color: #525252;
 }
 
 .task-completed::after {
@@ -87,7 +92,7 @@ li {
   position: absolute;
   left: 0;
   bottom: 50%;
-  background: black;
+  background: #090801;
   height: 2px;
   width: 0;
   transition: width var(--duration) ease;
@@ -95,4 +100,29 @@ li {
 
 .task-completed.checked::after {
   width: 100%;
+}
+
+.edit-btn {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.task-edit-input {
+  flex: 1;
+  font-size: 24px;
+  padding: 8px;
+  border-radius: 10px;
+  outline: none;
+  text-align: left;
+  caret-color: black;
+  transition: all 0.3s ease;
+}
+
+.task-edit-input.editing {
+  border-color: #f57a00;
+}
+
+.delete-btn {
+  cursor: pointer;
+  margin-left: 5px;
 }
