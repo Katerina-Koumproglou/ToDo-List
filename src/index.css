@@ -26,13 +26,15 @@ html {
 @media (max-width: 768px) {
   html {
     font-size: 0.9rem;
+    padding: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   html {
     font-size: 0.7rem;
-    max-width: 90%;
+    padding: 1rem;
+    max-width: 95%;
   }
 }
 
@@ -42,7 +44,6 @@ body {
   background-color: #ffe104;
   font-family: "JosefinSans", sans-serif;
   color: #090801;
-  margin: 0 auto;
   margin-top: 6.3rem;
 }
 

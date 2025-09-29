@@ -47,7 +47,7 @@
 }
 
 .add-btn:hover {
-  transform: translateY(-5px);
+  transform: translateY(-0.3rem);
   box-shadow: 0 0.6rem 1.1rem rgba(0, 0, 0, 0.15);
 }
 
