@@ -6,18 +6,28 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./ToDoList.css";
 import notifSound from "../assets/sounds/notif-sound.mp3";
 
-var idCounter = 1;
-
 export const ToDoList = () => {
-  const [tasks, setTasks] = useState([]);
+  //Set idCounter for tasks
+  const [idCounter, setIdCounter] = useState(() => {
+    const savedIdCounter = localStorage.getItem("idCounter");
+    return savedIdCounter ? parseInt(savedIdCounter, 10) : 1;
+  });
+
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
   const [taskText, setTaskText] = useState("");
 
   //Edit tasks
   const [editTask, setEditTask] = useState(null);
   const [editText, setEditText] = useState("");
 
-  //Notification
-  const [reminders, setReminders] = useState({});
+  //Reminders
+  const [reminders, setReminders] = useState(() => {
+    const savedReminders = localStorage.getItem("reminders");
+    return savedReminders ? JSON.parse(savedReminders) : {};
+  });
   const [showReminderInput, setShowReminderInput] = useState({});
 
   useEffect(() => {
@@ -25,6 +35,38 @@ export const ToDoList = () => {
       Notification.requestPermission();
     }
   }, []);
+
+  //Load tasks from localStorage
+  useEffect(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    const savedIdCounter = localStorage.getItem("idCounter");
+    if (savedTasks) {
+      const parsedTasks = JSON.parse(savedTasks);
+      setTasks(parsedTasks);
+    } else {
+      console.log("Failed to retreive tasks");
+    }
+
+    const savedReminders = localStorage.getItem("reminders");
+    if (savedReminders) {
+      const parsedReminders = JSON.parse(savedReminders);
+      const parsedDates = {};
+      for (const id in parsedReminders) {
+        parsedDates[id] = new Date(parsedReminders[id]);
+      }
+      setReminders(parsedDates);
+    }
+  }, []);
+
+  //Save tasks to localStorage
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("idCounter", idCounter.toString());
+  }, [tasks, idCounter]);
+
+  useEffect(() => {
+    localStorage.setItem("reminders", JSON.stringify(reminders));
+  }, [reminders]);
 
   //Add task button
   const handleAddButton = () => {
@@ -37,7 +79,7 @@ export const ToDoList = () => {
       completed: false,
     };
     setTasks((prev) => [...prev, newTask]);
-    idCounter++;
+    setIdCounter((prev) => prev + 1);
     setTaskText("");
   };
 
