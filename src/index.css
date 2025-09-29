@@ -19,15 +19,31 @@
   font-style: normal;
 }
 
+html {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 0.7rem;
+    max-width: 90%;
+  }
+}
+
 body {
   margin: 0;
   text-align: center;
   background-color: #ffe104;
   font-family: "JosefinSans", sans-serif;
   color: #090801;
-  max-width: 600px;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 6.3rem;
 }
 
 input,
@@ -39,6 +55,6 @@ select {
 }
 
 h1 {
-  font-size: 55px;
+  font-size: 3.5rem;
   font-family: "KirangHaerang" !important;
 }
