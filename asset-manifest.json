@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/Katerina-Koumproglou/ToDo-List/static/css/main.390a02d2.css",
+    "main.js": "/Katerina-Koumproglou/ToDo-List/static/js/main.11e11f33.js",
+    "static/js/453.aec2852f.chunk.js": "/Katerina-Koumproglou/ToDo-List/static/js/453.aec2852f.chunk.js",
+    "static/media/KirangHaerang-Regular.ttf": "/Katerina-Koumproglou/ToDo-List/static/media/KirangHaerang-Regular.7dd9ceb7425c0440ec02.ttf",
+    "static/media/JosefinSans-VariableFont_wght.ttf": "/Katerina-Koumproglou/ToDo-List/static/media/JosefinSans-VariableFont_wght.c464ea79c32a55349581.ttf",
+    "static/media/news-of-the-world-wide.ttf": "/Katerina-Koumproglou/ToDo-List/static/media/news-of-the-world-wide.15e8174bae8525d20dd5.ttf",
+    "static/media/notif-sound.mp3": "/Katerina-Koumproglou/ToDo-List/static/media/notif-sound.85553751e2a8dab7b7e9.mp3",
+    "index.html": "/Katerina-Koumproglou/ToDo-List/index.html",
+    "main.390a02d2.css.map": "/Katerina-Koumproglou/ToDo-List/static/css/main.390a02d2.css.map",
+    "main.11e11f33.js.map": "/Katerina-Koumproglou/ToDo-List/static/js/main.11e11f33.js.map",
+    "453.aec2852f.chunk.js.map": "/Katerina-Koumproglou/ToDo-List/static/js/453.aec2852f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.390a02d2.css",
+    "static/js/main.11e11f33.js"
+  ]
+}
