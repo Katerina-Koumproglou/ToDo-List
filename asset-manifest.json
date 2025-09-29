@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/ToDo-List/static/css/main.bcd18e0e.css",
+    "main.css": "/ToDo-List/static/css/main.c765193c.css",
     "main.js": "/ToDo-List/static/js/main.8134412f.js",
     "static/js/453.aec2852f.chunk.js": "/ToDo-List/static/js/453.aec2852f.chunk.js",
     "static/media/KirangHaerang-Regular.ttf": "/ToDo-List/static/media/KirangHaerang-Regular.7dd9ceb7425c0440ec02.ttf",
+    "static/media/background.jpg": "/ToDo-List/static/media/background.a7edece8990777311f85.jpg",
     "static/media/JosefinSans-VariableFont_wght.ttf": "/ToDo-List/static/media/JosefinSans-VariableFont_wght.c464ea79c32a55349581.ttf",
     "static/media/news-of-the-world-wide.ttf": "/ToDo-List/static/media/news-of-the-world-wide.15e8174bae8525d20dd5.ttf",
     "static/media/notif-sound.mp3": "/ToDo-List/static/media/notif-sound.85553751e2a8dab7b7e9.mp3",
     "index.html": "/ToDo-List/index.html",
-    "main.bcd18e0e.css.map": "/ToDo-List/static/css/main.bcd18e0e.css.map",
+    "main.c765193c.css.map": "/ToDo-List/static/css/main.c765193c.css.map",
     "main.8134412f.js.map": "/ToDo-List/static/js/main.8134412f.js.map",
     "453.aec2852f.chunk.js.map": "/ToDo-List/static/js/453.aec2852f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bcd18e0e.css",
+    "static/css/main.c765193c.css",
     "static/js/main.8134412f.js"
   ]
 }
