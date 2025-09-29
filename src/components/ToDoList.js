@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./ToDoList.css";
+import notifSound from "../assets/sounds/notif-sound.mp3";
 
 var idCounter = 1;
 
@@ -9,6 +12,15 @@ export const ToDoList = () => {
 
   const [editTask, setEditTask] = useState(null);
   const [editText, setEditText] = useState("");
+
+  //Notification
+  const [reminders, setReminders] = useState({});
+
+  useEffect(() => {
+    if ("Notification" in window && Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  }, []);
 
   const handleAddButton = () => {
     const trimmedText = taskText.trim();
@@ -32,7 +44,7 @@ export const ToDoList = () => {
     );
   };
 
-  //Edit function
+  //Edit task
   const startEdit = (id, text) => {
     setEditTask(id);
     setEditText(text);
@@ -46,10 +58,48 @@ export const ToDoList = () => {
     setEditText("");
   };
 
-  //Delete function
+  //Delete task
   const deleteTask = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
+
+  //Set reminder
+  const handleSetReminder = (id, dateTime) => {
+    const reminderDate = new Date(dateTime);
+    if (reminderDate > new Date()) {
+      setReminders((prev) => ({ ...prev, [id]: reminderDate }));
+      toast.success("Reminder set!");
+    } else {
+      toast.error("Please pick a future time.");
+    }
+  };
+
+  //Reminder goes off
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      const now = new Date();
+
+      tasks.forEach((task) => {
+        const reminderTime = reminders[task.id];
+        if (reminderTime && now >= reminderTime) {
+          const sound = new Audio(notifSound);
+          sound
+            .play()
+            .catch((err) =>
+              console.warn("User needs to interact, audio can't play", err)
+            );
+
+          //Show notification
+          toast.info(`Reminder for task: ${task.text}`, {
+            autoClose: 5000,
+            position: "top-center",
+          });
+          setReminders((prev) => ({ ...prev, [task.id]: null }));
+        }
+      });
+    }, 1000);
+    return () => clearInterval(intervalID);
+  }, [tasks, reminders]);
 
   return (
     <div className="to-do">
@@ -129,6 +179,12 @@ export const ToDoList = () => {
                   >
                     {task.text}
                   </span>
+                  <input
+                    type="datetime-local"
+                    className="reminder-input"
+                    onChange={(e) => handleSetReminder(task.id, e.target.value)}
+                  />
+
                   <span
                     className="edit-btn"
                     onClick={() => startEdit(task.id, task.text)}
@@ -165,6 +221,7 @@ export const ToDoList = () => {
           ))}
         </ul>
       </div>
+      <ToastContainer />
     </div>
   );
 };

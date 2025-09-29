@@ -126,3 +126,8 @@ li {
   cursor: pointer;
   margin-left: 5px;
 }
+
+.reminder-input {
+  padding: 6px 10px;
+  font-size: 14px;
+}
