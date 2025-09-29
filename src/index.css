@@ -5,12 +5,27 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "JosefinSans";
+  src: url(./assets/fonts/JosefinSans-VariableFont_wght.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "KirangHaerang";
+  src: url(./assets/fonts/KirangHaerang-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   text-align: center;
   background-color: #ffe104;
-  font-family: "NewsOfTheWorld", sans-serif;
-  max-width: 400px;
+  font-family: "JosefinSans", sans-serif;
+  color: #090801;
+  max-width: 500px;
   margin: 0 auto;
   margin-top: 100px;
 }
@@ -18,12 +33,12 @@ body {
 input,
 button,
 textarea,
-h1,
 select {
   font-family: inherit;
   color: #090801;
 }
 
 h1 {
-  font-size: 50px;
+  font-size: 55px;
+  font-family: "KirangHaerang" !important;
 }

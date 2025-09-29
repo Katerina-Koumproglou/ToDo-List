@@ -30,6 +30,7 @@
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
+/* Add button */
 .add-btn {
   padding: 10px 14px;
   border-radius: 20px;
@@ -60,6 +61,7 @@ li {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Chechbox icon */
 .checkbox {
   position: relative;
   margin-right: 10px;
@@ -70,11 +72,13 @@ li {
 
 .checkbox svg,
 .edit-btn svg,
-.delete-btn svg {
+.delete-btn svg,
+.reminder-btn svg {
   height: 30px;
   width: 30px;
 }
 
+/* Tick icon */
 .task-completed {
   position: relative;
   text-align: left;
@@ -102,6 +106,7 @@ li {
   width: 100%;
 }
 
+/* Edit icon */
 .edit-btn {
   margin-left: auto;
   cursor: pointer;
@@ -127,7 +132,59 @@ li {
   margin-left: 5px;
 }
 
+/* Reminder icon */
+.reminder-btn {
+  cursor: pointer;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+}
+
 .reminder-input {
   padding: 6px 10px;
   font-size: 14px;
+  font-size: 0.9rem;
+  z-index: 9999;
+}
+
+/* Calendar popup */
+
+.react-datepicker,
+.react-datepicker * {
+  font-family: "JosefinSans", sans-serif;
+  color: #090801;
+}
+
+.react-datepicker {
+  font-size: 1.2rem;
+  width: auto !important;
+  min-width: 360px;
+  border-radius: 12px;
+  border: 2px solid #f57a00;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
+
+.react-datepicker__time-container {
+  width: 150px;
+}
+
+.react-datepicker__time-box {
+  padding: 10px;
+}
+
+.react-datepicker__time-list-item {
+  font-size: 1rem;
+}
+
+.react-datepicker__header {
+  background-color: #f57a00;
+  border-bottom: none;
+}
+
+.react-datepicker__date--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #f57a00;
+  border-radius: 50%;
+  color: white;
 }
