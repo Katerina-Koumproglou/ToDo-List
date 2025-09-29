@@ -8,7 +8,7 @@
   background-color: #2ed4c9;
   padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   width: 100%;
 }
 
@@ -23,11 +23,10 @@
   flex: 1;
   padding: 12px 14px;
   border-radius: 20px;
-  font-size: 14px;
   border: none;
   outline: none;
-  font-size: 24px;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-size: 22px;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Add button */
@@ -38,7 +37,16 @@
   cursor: pointer;
   min-width: 80px;
   font-size: 20px;
+  font-weight: bold;
+  transform: translateY(0);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 0.18s ease;
   background-color: #f57a00;
+}
+
+.add-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
 }
 
 :root {
@@ -48,7 +56,7 @@
 ul {
   list-style-type: none;
   padding: 0;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 li {
@@ -78,20 +86,76 @@ li {
   width: 30px;
 }
 
+.icon-btn {
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.edit-btn,
+.delete-btn,
+.reminder-btn {
+  display: block;
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 0.18s ease;
+}
+
+.edit-btn:hover,
+.delete-btn:hover,
+.reminder-btn:hover {
+  transform: translateY(-5px);
+}
+
+.edit-btn:after,
+.delete-btn:after,
+.reminder-btn:after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  bottom: 0px;
+  height: 3px;
+  width: 70%;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 200ms ease;
+  background: #f57a00;
+  opacity: 0;
+}
+
+.edit-btn:hover::after,
+.delete-btn:hover::after,
+.reminder-btn:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
 /* Tick icon */
 .task-completed {
-  position: relative;
-  text-align: left;
   padding: 8px;
   border: 2px solid transparent;
+  flex: 1;
+  display: flex;
+  align-items: center;
   transition: all calc(var(--duration) / 2) linear calc(var(--duration) / 2);
+}
+
+.task-text {
+  position: relative;
+  display: inline-block;
 }
 
 .task-completed.checked {
   color: #525252;
+  /* text-decoration: line-through; */
 }
 
-.task-completed::after {
+.task-text::after {
   content: "";
   position: absolute;
   left: 0;
@@ -102,19 +166,14 @@ li {
   transition: width var(--duration) ease;
 }
 
-.task-completed.checked::after {
+.task-completed.checked .task-text::after {
   width: 100%;
 }
 
 /* Edit icon */
-.edit-btn {
-  margin-left: auto;
-  cursor: pointer;
-}
-
 .task-edit-input {
   flex: 1;
-  font-size: 24px;
+  font-size: 22px;
   padding: 8px;
   border-radius: 10px;
   outline: none;
@@ -127,28 +186,18 @@ li {
   border-color: #f57a00;
 }
 
-.delete-btn {
-  cursor: pointer;
-  margin-left: 5px;
-}
-
 /* Reminder icon */
-.reminder-btn {
-  cursor: pointer;
-  margin-left: 8px;
-  display: inline-flex;
-  align-items: center;
-}
-
 .reminder-input {
+  margin-left: 10px;
+  margin-right: 10px;
   padding: 6px 10px;
   font-size: 14px;
   font-size: 0.9rem;
+  border: 1px solid #f57a00;
   z-index: 9999;
 }
 
 /* Calendar popup */
-
 .react-datepicker,
 .react-datepicker * {
   font-family: "JosefinSans", sans-serif;
