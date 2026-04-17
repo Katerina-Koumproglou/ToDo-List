@@ -3,7 +3,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./ToDoList.css";
 import notifSound from "../assets/sounds/notif-sound.mp3";
 import InputTask from "./UILayout/InputTask";
 import { IconButton } from "../styles/Buttons.js";
@@ -11,6 +10,7 @@ import { Checkbox } from "../styles/Buttons.js";
 import { MainWrapper, PageWrapper } from "../styles/Wrappers.js";
 import { List, ListItem } from "../styles/Lists.js";
 import { EditInput } from "../styles/Inputs.js";
+import { TaskText, TaskWrapper } from "../styles/TaskTextStyles.js";
 
 export const ToDoList = () => {
   //Set idCounter for tasks
@@ -222,13 +222,9 @@ export const ToDoList = () => {
                 </>
               ) : (
                 <>
-                  <span
-                    className={`task-completed ${
-                      task.completed ? "checked" : ""
-                    }`}
-                  >
-                    <span className="task-text">{task.text}</span>
-                  </span>
+                  <TaskWrapper $checked={task.completed}>
+                    <TaskText $checked={task.completed}>{task.text}</TaskText>
+                  </TaskWrapper>
 
                   {/* Reminder icon */}
                   <IconButton onClick={() => toggleReminderInput(task.id)}>

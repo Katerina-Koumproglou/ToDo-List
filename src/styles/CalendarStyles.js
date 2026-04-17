@@ -41,4 +41,15 @@ export const CalendarStyles = createGlobalStyle`
   border-radius: 50%;
   color: white;
 }
+
+/* Reminder icon */
+.reminder-input {
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  font-size: 0.9rem;
+  border: 0.06rem solid #f57a00;
+  z-index: 9999;
+}
 `;
