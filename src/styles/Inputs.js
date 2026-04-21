@@ -20,5 +20,5 @@ export const EditInput = styled.input`
   text-align: left;
   caret-color: black;
   transition: all 0.3s ease;
-  border-color: ${({ editing }) => (editing ? "#f57a00" : "transparent")};
+  border-color: ${({ $editing }) => ($editing ? "#f57a00" : "transparent")};
 `;
