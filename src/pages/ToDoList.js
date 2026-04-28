@@ -17,6 +17,7 @@ export const ToDoList = () => {
     editTask,
     editText,
     setEditText,
+    updateTaskReminder,
     handleAddButton,
     toggleComplete,
     startEdit,
@@ -29,7 +30,7 @@ export const ToDoList = () => {
     showReminderInput,
     handleSetReminder,
     toggleReminderInput,
-  } = useReminders(tasks);
+  } = useReminders(tasks, updateTaskReminder);
 
   return (
     <PageWrapper>

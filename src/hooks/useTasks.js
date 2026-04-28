@@ -1,16 +1,11 @@
 import { useState } from "react";
+import { loadIdCounter, loadTasks } from "../functions/storage";
 
 export const useTasks = () => {
   //Set idCounter for tasks
-  const [idCounter, setIdCounter] = useState(() => {
-    const savedIdCounter = localStorage.getItem("idCounter");
-    return savedIdCounter ? parseInt(savedIdCounter, 10) : 1;
-  });
+  const [idCounter, setIdCounter] = useState(loadIdCounter);
 
-  const [tasks, setTasks] = useState(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    return savedTasks ? JSON.parse(savedTasks) : [];
-  });
+  const [tasks, setTasks] = useState(loadTasks);
   const [taskText, setTaskText] = useState("");
 
   //Edit tasks
@@ -23,6 +18,17 @@ export const useTasks = () => {
     localStorage.setItem("idCounter", idCounter.toString());
   };
 
+  //Update the reminder for each task
+  const updateTaskReminder = (id, dateTime) => {
+    setTasks((prevTasks) => {
+      const updatedTasks = tasks.map((task) =>
+        task.id === id ? { ...task, reminder: dateTime } : task,
+      );
+      saveTasks(updatedTasks, idCounter);
+      return updatedTasks;
+    });
+  };
+
   //Add task button
   const handleAddButton = () => {
     const trimmedText = taskText.trim();
@@ -32,6 +38,7 @@ export const useTasks = () => {
       id: idCounter,
       text: trimmedText,
       completed: false,
+      reminder: null,
     };
 
     const updatedTasks = [...tasks, newTask];
@@ -84,6 +91,7 @@ export const useTasks = () => {
     editTask,
     editText,
     setEditText,
+    updateTaskReminder,
     handleAddButton,
     toggleComplete,
     startEdit,

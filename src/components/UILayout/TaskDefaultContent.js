@@ -27,7 +27,7 @@ const TaskDefaultContent = ({
       {/* Only show calendar when toggled */}
       {showReminderInput[task.id] && (
         <DatePicker
-          selected={reminders[task.id] || null}
+          selected={task.reminder ? new Date(task.reminder) : null}
           onChange={(date) => handleSetReminder(task.id, date)}
           placeholderText="Select date/time..."
           className="reminder-input"

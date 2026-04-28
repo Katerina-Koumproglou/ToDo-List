@@ -69,7 +69,7 @@ export const IconButton = styled.button`
   ${(props) => props.$edit && ``}
 `;
 
-/* Chechbox icon - NOT A BUTTON */
+/* Checkbox icon - NOT A BUTTON */
 export const Checkbox = styled.div`
   position: relative;
   margin-right: 0.6rem;
@@ -82,5 +82,3 @@ export const Checkbox = styled.div`
     width: 1.8rem;
   }
 `;
-
-// export const TickIcon = styled.

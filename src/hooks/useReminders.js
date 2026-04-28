@@ -1,32 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { toast } from "react-toastify";
-import notifSound from "../assets/sounds/notif-sound.mp3";
+import { startReminderCountdown } from "../functions/startReminderCountdown.js";
 
-export const useReminders = (tasks) => {
-  //Reminders
-  const getSavedReminders = () => {
-    const savedReminders = localStorage.getItem("reminders");
-
-    if (!savedReminders) return {};
-
-    const parsedReminders = JSON.parse(savedReminders);
-    const parsedDates = {};
-    for (const id in parsedReminders) {
-      parsedDates[id] = parsedReminders[id]
-        ? new Date(parsedReminders[id])
-        : null;
-    }
-
-    return parsedDates;
-  };
-
-  const [reminders, setReminders] = useState(getSavedReminders);
+export const useReminders = (tasks, updateTaskReminder) => {
   const [showReminderInput, setShowReminderInput] = useState({});
 
-  //Save reminders to localStorage
-  const saveReminders = (reminders) => {
-    localStorage.setItem("reminders", JSON.stringify(reminders));
-  };
+  //Keeps track of IDs of the active timers so that the old reminders/alarms can be canceled
+  const timerRef = useRef({});
+
+  //When the page loads for the first time, the appLoadedRef checks for future reminders and it starts their countdown
+  const appLoadedRef = useRef(false);
+  if (!appLoadedRef.current) {
+    tasks.forEach((task) => {
+      if (task.reminder && task.reminder > new Date()) {
+        startReminderCountdown(task, task.reminder, timerRef);
+      }
+    });
+    appLoadedRef.current = true;
+  }
 
   //Needs editing with the async - await
   const requestNotificationPermission = async () => {
@@ -37,13 +28,20 @@ export const useReminders = (tasks) => {
   };
 
   //Set reminder
-  const handleSetReminder = (id, dateTime) => {
-    requestNotificationPermission();
-    if (dateTime && dateTime > new Date()) {
-      const updatedReminders = { ...reminders, [id]: dateTime };
+  const handleSetReminder = async (id, dateTime) => {
+    const permission = await requestNotificationPermission();
+    if (permission !== "granted") {
+      toast.error("Notifications are not allowed.");
+      return;
+    }
 
-      setReminders(updatedReminders);
-      saveReminders(updatedReminders);
+    if (dateTime && dateTime > new Date()) {
+      const task = tasks.find((t) => t.id === id);
+      if (task) {
+        startReminderCountdown(task, dateTime, timerRef);
+      }
+
+      updateTaskReminder(id, dateTime);
 
       toast.success("Reminder set!");
       setShowReminderInput((prev) => ({ ...prev, [id]: false }));
@@ -59,37 +57,7 @@ export const useReminders = (tasks) => {
     }));
   };
 
-  //Reminder goes off
-  useEffect(() => {
-    const intervalID = setInterval(() => {
-      const now = new Date();
-
-      tasks.forEach((task) => {
-        const reminderTime = reminders[task.id];
-        if (reminderTime && now >= reminderTime) {
-          const sound = new Audio(notifSound);
-          sound
-            .play()
-            .catch((err) =>
-              console.warn("User needs to interact, audio can't play", err),
-            );
-
-          //Show notification
-          toast.info(`Reminder for task: ${task.text}`, {
-            autoClose: 5000,
-            position: "top-center",
-          });
-          const updatedReminders = { ...reminders, [task.id]: null };
-          setReminders(updatedReminders);
-          saveReminders(updatedReminders);
-        }
-      });
-    }, 1000);
-    return () => clearInterval(intervalID);
-  }, [tasks, reminders]);
-
   return {
-    reminders,
     showReminderInput,
     handleSetReminder,
     toggleReminderInput,
