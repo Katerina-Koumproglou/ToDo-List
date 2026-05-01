@@ -9,7 +9,6 @@ const TaskDefaultContent = ({
   task,
   toggleReminderInput,
   showReminderInput,
-  reminders,
   handleSetReminder,
   startEdit,
   deleteTask,

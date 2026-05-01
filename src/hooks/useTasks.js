@@ -1,5 +1,14 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useStorage } from "./useStorage";
+import { saveEdit, startEdit } from "../functions/editTask";
+import { saveTasks } from "../functions/saveTasks.js";
+import {
+  deleteTask,
+  handleAddButton,
+  toggleComplete,
+} from "../functions/taskActions.js";
+import { handleSetReminder } from "../functions/reminderActions.js";
+import { startReminderCountdown } from "../functions/startReminderCountdown.js";
 
 export const useTasks = () => {
   //Set idCounter for tasks
@@ -12,14 +21,24 @@ export const useTasks = () => {
   const [editTask, setEditTask] = useState(null);
   const [editText, setEditText] = useState("");
 
+  const [showReminderInput, setShowReminderInput] = useState({});
+
+  //Keeps track of IDs of the active timers so that the old reminders/alarms can be canceled
+  const timerRef = useRef({});
+
+  //When the page loads for the first time, the appLoadedRef checks for future reminders and it starts their countdown
+  const appLoadedRef = useRef(false);
+  if (!appLoadedRef.current) {
+    tasks.forEach((task) => {
+      if (task.reminder && task.reminder > new Date()) {
+        startReminderCountdown(task, task.reminder, timerRef);
+      }
+    });
+    appLoadedRef.current = true;
+  }
+
   //Set the useStates with the stored data
   useStorage(setIdCounter, setTasks);
-
-  //Save tasks to localStorage
-  const saveTasks = (tasks, idCounter) => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    localStorage.setItem("idCounter", idCounter.toString());
-  };
 
   //Update the reminder for each task
   const updateTaskReminder = (id, dateTime) => {
@@ -32,61 +51,6 @@ export const useTasks = () => {
     });
   };
 
-  //Add task button
-  const handleAddButton = () => {
-    const trimmedText = taskText.trim();
-    if (!trimmedText) return;
-
-    const newTask = {
-      id: idCounter,
-      text: trimmedText,
-      completed: false,
-      reminder: null,
-    };
-
-    const updatedTasks = [...tasks, newTask];
-    const newIdCounter = idCounter + 1;
-
-    setTasks(updatedTasks);
-    setIdCounter(newIdCounter);
-
-    saveTasks(updatedTasks, newIdCounter);
-    setTaskText("");
-  };
-
-  const toggleComplete = (id) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task,
-    );
-
-    setTasks(updatedTasks);
-    saveTasks(updatedTasks, idCounter);
-  };
-
-  //Edit task
-  const startEdit = (id, text) => {
-    setEditTask(id);
-    setEditText(text);
-  };
-
-  const saveEdit = (id) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, text: editText } : task,
-    );
-
-    setTasks(updatedTasks);
-    saveTasks(updatedTasks, idCounter);
-    setEditTask(null);
-    setEditText("");
-  };
-
-  //Delete task
-  const deleteTask = (id) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
-    saveTasks(updatedTasks, idCounter);
-  };
-
   return {
     tasks,
     taskText,
@@ -94,11 +58,41 @@ export const useTasks = () => {
     editTask,
     editText,
     setEditText,
-    updateTaskReminder,
-    handleAddButton,
-    toggleComplete,
-    startEdit,
-    saveEdit,
-    deleteTask,
+    handleAddButton: () =>
+      handleAddButton(
+        taskText,
+        idCounter,
+        tasks,
+        setTasks,
+        setIdCounter,
+        setTaskText,
+      ),
+    toggleComplete: (id) => toggleComplete(id, tasks, setTasks, idCounter),
+    startEdit: (id, text) => startEdit(id, text, setEditTask, setEditText),
+    saveEdit: (id) =>
+      saveEdit(
+        id,
+        tasks,
+        editText,
+        idCounter,
+        setTasks,
+        setEditTask,
+        setEditText,
+      ),
+    deleteTask: (id) => deleteTask(id, tasks, setTasks, idCounter),
+    handleSetReminder: (id, dateTime) =>
+      handleSetReminder(
+        id,
+        dateTime,
+        tasks,
+        timerRef,
+        updateTaskReminder,
+        setShowReminderInput,
+      ),
+    toggleReminderInput: (id) =>
+      setShowReminderInput((prev) => ({
+        ...prev,
+        [id]: !prev[id],
+      })),
   };
 };

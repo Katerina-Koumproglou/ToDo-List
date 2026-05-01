@@ -5,7 +5,6 @@ import { MainWrapper, PageWrapper } from "../styles/Wrappers.js";
 import { List, ListItem } from "../styles/Lists.js";
 import { CheckboxIcon, TickIcon } from "../components/UILayout/Icons.js";
 import { useTasks } from "../hooks/useTasks.js";
-import { useReminders } from "../hooks/useReminders.js";
 import TaskEditMode from "../components/UILayout/TaskEditMode.js";
 import TaskDefaultContent from "../components/UILayout/TaskDefaultContent.js";
 
@@ -17,20 +16,15 @@ export const ToDoList = () => {
     editTask,
     editText,
     setEditText,
-    updateTaskReminder,
     handleAddButton,
     toggleComplete,
     startEdit,
     saveEdit,
     deleteTask,
-  } = useTasks();
-
-  const {
-    reminders,
-    showReminderInput,
     handleSetReminder,
     toggleReminderInput,
-  } = useReminders(tasks, updateTaskReminder);
+    showReminderInput,
+  } = useTasks();
 
   return (
     <PageWrapper>
@@ -67,7 +61,6 @@ export const ToDoList = () => {
                   task={task}
                   toggleReminderInput={toggleReminderInput}
                   showReminderInput={showReminderInput}
-                  reminders={reminders}
                   handleSetReminder={handleSetReminder}
                   startEdit={startEdit}
                   deleteTask={deleteTask}
