@@ -1,5 +1,5 @@
-import { saveTasks } from "./saveTasks";
 import { toast } from "react-toastify";
+import { startReminderCountdown } from "./startReminderCountdown";
 
 //Needs editing with the async - await
 const requestNotificationPermission = async () => {

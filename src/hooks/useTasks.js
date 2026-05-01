@@ -23,6 +23,9 @@ export const useTasks = () => {
 
   const [showReminderInput, setShowReminderInput] = useState({});
 
+  //Set the useStates with the stored data
+  useStorage(setIdCounter, setTasks);
+
   //Keeps track of IDs of the active timers so that the old reminders/alarms can be canceled
   const timerRef = useRef({});
 
@@ -36,9 +39,6 @@ export const useTasks = () => {
     });
     appLoadedRef.current = true;
   }
-
-  //Set the useStates with the stored data
-  useStorage(setIdCounter, setTasks);
 
   //Update the reminder for each task
   const updateTaskReminder = (id, dateTime) => {
@@ -94,5 +94,6 @@ export const useTasks = () => {
         ...prev,
         [id]: !prev[id],
       })),
+    showReminderInput,
   };
 };
