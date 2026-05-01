@@ -1,16 +1,19 @@
 import { useState } from "react";
-import { loadIdCounter, loadTasks } from "../functions/storage";
+import { useStorage } from "./useStorage";
 
 export const useTasks = () => {
   //Set idCounter for tasks
-  const [idCounter, setIdCounter] = useState(loadIdCounter);
+  const [idCounter, setIdCounter] = useState(1);
 
-  const [tasks, setTasks] = useState(loadTasks);
+  const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState("");
 
   //Edit tasks
   const [editTask, setEditTask] = useState(null);
   const [editText, setEditText] = useState("");
+
+  //Set the useStates with the stored data
+  useStorage(setIdCounter, setTasks);
 
   //Save tasks to localStorage
   const saveTasks = (tasks, idCounter) => {
